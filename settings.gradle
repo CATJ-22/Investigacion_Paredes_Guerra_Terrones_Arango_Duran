@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Investigacion_Paredes_Guerra_Terrones_Arango_Duran"
