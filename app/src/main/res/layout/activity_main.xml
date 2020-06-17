@@ -24,9 +24,10 @@
         android:layout_marginLeft="96dp"
         android:layout_marginTop="16dp"
         android:background="#FFFFFFFF"
+        android:onClick="blueTooth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blueblue_copia" />
+        app:srcCompat="@drawable/blueblue_copia"/>
 
     <ImageButton
         android:id="@+id/imageButton18"
@@ -36,6 +37,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="16dp"
         android:background="#FFFFFFFF"
+        android:onClick="wifiTest"
         app:layout_constraintStart_toEndOf="@+id/imageButton12"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/wiii" />
