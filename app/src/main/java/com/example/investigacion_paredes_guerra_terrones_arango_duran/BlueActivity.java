@@ -17,7 +17,7 @@ public class BlueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blue);
         bluetoothAdapter =BluetoothAdapter.getDefaultAdapter();
     }
-    public void on(View v){
+    public void on(View view){
         if(bluetoothAdapter == null){
             Toast.makeText(getApplicationContext(),"Bluetooth no es soportado en este celular.",Toast.LENGTH_SHORT).show();
         }

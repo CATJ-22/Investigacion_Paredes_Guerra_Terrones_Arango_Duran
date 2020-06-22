@@ -7,57 +7,33 @@
     tools:context=".BlueActivity">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My devices"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="136dp" />
-
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="446dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="156dp">
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="98dp"
+            android:layout_height="47dp"
+            android:onClick="on"
+            android:text="ON" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="BLUETOOTH" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Other devices" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="101dp"
+            android:layout_height="47dp"
+            android:text="OFF" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="98dp"
-        android:layout_height="47dp"
-        android:onClick="on"
-        android:text="ON"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="21dp" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="101dp"
-        android:layout_height="47dp"
-        android:text="OFF"
-        tools:layout_editor_absoluteX="294dp"
-        tools:layout_editor_absoluteY="21dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BLUETOOTH"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="34dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
