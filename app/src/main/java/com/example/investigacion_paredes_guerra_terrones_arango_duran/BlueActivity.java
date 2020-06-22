@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,7 +49,14 @@ public class BlueActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         }
+    };
+
+    protected void onstart(){
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(broadcastReceiver,intentFilter);
     }
+
     private void findPairedDevices(){
         int index = 0;
         Set<BluetoothDevice> bluetoothDeviceSet = bluetoothAdapter.getBondedDevices();
