@@ -35,12 +35,6 @@ public class BlueActivity extends AppCompatActivity {
         recibir =findViewById(R.id.PairedBtn);
         mPairedTV =findViewById(R.id.pairedTv);
 
-        if(bluetoothAdapter == null){
-            estado.setText("Bluetooth is not available");
-        }
-        else {
-            estado.setText("Bluetooth is available");
-        }
         encendido.setOnClickListener(new View.OnClickListener(){
             @Override
                     public void onClick(View v){
@@ -61,6 +55,7 @@ public class BlueActivity extends AppCompatActivity {
                    startActivityForResult(i,REQUEST_DISCOVER_BT);
                }
                else {
+                   mPairedTV.setText("");
                    Toast.makeText(getApplicationContext(),"Bluetooth Apagado.",Toast.LENGTH_SHORT).show();
                }
            }
