@@ -4,87 +4,82 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+
 import java.util.Set;
 
 public class BlueActivity extends AppCompatActivity {
 
+    private static final int REQUEST_ENABLE_BT = 0;
+    private static final int REQUEST_DISCOVER_BT = 1;
+
+    TextView mPairedTV,estado;
+    Button encendido,apagar,recibir;
     BluetoothAdapter bluetoothAdapter;
-    ArrayAdapter<String>arrayAdapter;
-    ArrayList arrayList;
-    ListView li;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blue);
+
         bluetoothAdapter =BluetoothAdapter.getDefaultAdapter();
-        li = (ListView)findViewById(R.id.listview);
-        arrayList = new ArrayList();
+        estado =findViewById(R.id.statusBluetoothTv);
+        encendido =findViewById(R.id.onBtn);
+        apagar =findViewById(R.id.offBtn);
+        recibir =findViewById(R.id.PairedBtn);
+        mPairedTV =findViewById(R.id.pairedTv);
 
-        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,arrayList);
-        li.setAdapter(arrayAdapter);
-
-        findPairedDevices();
-    }
-    public void Scan(View view){
-        bluetoothAdapter.startDiscovery();
-    }
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(BluetoothDevice.ACTION_FOUND.equals(action)){
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                arrayList.add(device.getName());
-                arrayAdapter.notifyDataSetChanged();
-            }
-        }
-    };
-
-    protected void onstart(){
-        super.onStart();
-        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(broadcastReceiver,intentFilter);
-    }
-
-    private void findPairedDevices(){
-        int index = 0;
-        Set<BluetoothDevice> bluetoothDeviceSet = bluetoothAdapter.getBondedDevices();
-        String[] str = new String[bluetoothDeviceSet.size()];
-
-        if(bluetoothDeviceSet.size()>0){
-            for(BluetoothDevice device: bluetoothDeviceSet)
-            {
-                str[index] = device.getName();
-                index++;
-            }
-            arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,str);
-            li.setAdapter(arrayAdapter);
-        }
-    }
-    public void on(View view){
         if(bluetoothAdapter == null){
-            Toast.makeText(getApplicationContext(),"Bluetooth no es soportado en este celular.",Toast.LENGTH_SHORT).show();
+            estado.setText("Bluetooth is not available");
         }
-
-        else
-        {
-            if(!bluetoothAdapter.isEnabled())
-            {
-                Intent i= new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(i,1);
+        else {
+            estado.setText("Bluetooth is available");
+        }
+        encendido.setOnClickListener(new View.OnClickListener(){
+            @Override
+                    public void onClick(View v){
+                if(!bluetoothAdapter.isEnabled()){
+                    Intent i= new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(i,REQUEST_ENABLE_BT);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Bluetooth Encendido.",Toast.LENGTH_SHORT).show();
+                }
             }
-        }
+        });
+       apagar.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View v) {
+               if(!bluetoothAdapter.disable()){
+                   Intent i= new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+                   startActivityForResult(i,REQUEST_DISCOVER_BT);
+               }
+               else {
+                   Toast.makeText(getApplicationContext(),"Bluetooth Apagado.",Toast.LENGTH_SHORT).show();
+               }
+           }
+        });
+       recibir.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(bluetoothAdapter.isEnabled()){
+                   mPairedTV.setText("Paired Devices");
+                   Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
+                   for(BluetoothDevice device: devices) {
+                       mPairedTV.append("\nDevice: " + device.getName()+"," + device);
+                   }
+               }
+               else{
+                   Toast.makeText(getApplicationContext(),"Bluetooth activado emparejar dispositivo.",Toast.LENGTH_SHORT).show();
+               }
+           }
+       });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -92,20 +87,6 @@ public class BlueActivity extends AppCompatActivity {
         {
             if(resultCode == RESULT_OK){
                 Toast.makeText(getApplicationContext(),"Bluetooth es aceptado.",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    public void off(View view){
-        if(bluetoothAdapter == null){
-            Toast.makeText(getApplicationContext(),"Bluetooth no es soportado en este celular.",Toast.LENGTH_SHORT).show();
-        }
-
-        else
-        {
-            if(!bluetoothAdapter.disable())
-            {
-                Intent i= new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                startActivityForResult(i,1);
             }
         }
     }
