@@ -2,27 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WifiActivity"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".WifiActivity">
 
     <Button
         android:id="@+id/btn_turnon"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Turn On"
-        android:textSize="20dp"
         android:layout_marginBottom="10dp"
-        android:onClick="onWifi"/>
+        android:onClick="onWifi"
+        android:text="Turn On"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btn_turnoff"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Turn Off"
-        android:textSize="20dp"
         android:layout_marginBottom="10dp"
-        android:onClick="offWifi"/>
+        android:onClick="offWifi"
+        android:text="Turn Off"
+        android:textSize="20dp" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="20dp"
+        />
 </LinearLayout>
