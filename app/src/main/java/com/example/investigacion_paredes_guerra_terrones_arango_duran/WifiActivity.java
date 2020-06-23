@@ -33,7 +33,7 @@ public class WifiActivity extends AppCompatActivity {
     }
     //Metodo para apagar el Wifi.
     public void offWifi(View view){
-        wifiM.setWifiEnabled(true);
+        wifiM.setWifiEnabled(false);
         Toast.makeText(this, "Wifi Deshabilitado", Toast.LENGTH_LONG).show();
     }
 }
