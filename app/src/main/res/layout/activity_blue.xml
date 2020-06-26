@@ -51,6 +51,12 @@
             android:layout_height="wrap_content"
             android:text="" />
 
+        <Button
+            android:id="@+id/btnBuscarDispositivos"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:text="BUSCAR DISPOSITIVOS" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

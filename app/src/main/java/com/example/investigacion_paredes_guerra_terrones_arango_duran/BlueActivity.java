@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class BlueActivity extends AppCompatActivity {
@@ -22,19 +26,25 @@ public class BlueActivity extends AppCompatActivity {
     TextView mPairedTV,estado;
     Button encendido,apagar,recibir;
     BluetoothAdapter bluetoothAdapter;
+    Button btnBuscarDispositivo ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blue);
 
+        // Register for broadcasts when a device is discovered.
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiver, filter);
+
+        btnBuscarDispositivo =(Button)findViewById(R.id.btnBuscarDispositivos);
         bluetoothAdapter =BluetoothAdapter.getDefaultAdapter();
         estado =findViewById(R.id.statusBluetoothTv);
         encendido =findViewById(R.id.onBtn);
         apagar =findViewById(R.id.offBtn);
         recibir =findViewById(R.id.PairedBtn);
         mPairedTV =findViewById(R.id.pairedTv);
-
+        ArrayList<BluetoothDevice> arrayDevices;
         encendido.setOnClickListener(new View.OnClickListener(){
             @Override
                     public void onClick(View v){
@@ -85,4 +95,41 @@ public class BlueActivity extends AppCompatActivity {
             }
         }
     }
+
+    // Create a BroadcastReceiver for ACTION_FOUND.
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Discovery has found a device. Get the BluetoothDevice
+                // object and its info from the Intent.
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress(); // MAC address
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Don't forget to unregister the ACTION_FOUND receiver.
+        unregisterReceiver(receiver);
+    }
+
+    // PAIR DEVICES
+/*
+    private final BroadcastReceiver bReceiver2= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Cada vez que se descubra un nuevo dispositivo Bluethooth, s
+             final String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+
+            }
+        }
+    };
+*/
 }
