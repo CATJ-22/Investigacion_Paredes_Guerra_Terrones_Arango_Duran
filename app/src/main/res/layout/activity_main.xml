@@ -21,14 +21,15 @@
         android:id="@+id/imageButton12"
         android:layout_width="82dp"
         android:layout_height="110dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
         android:background="#FFFFFFFF"
         android:onClick="blueTooth"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blueblue_copia"/>
+        app:layout_constraintVertical_bias="0.032"
+        app:srcCompat="@drawable/blueblue_copia" />
 
     <ImageButton
         android:id="@+id/imageButton18"
@@ -36,11 +37,14 @@
         android:layout_height="107dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
         android:background="#FFFFFFFF"
         android:onClick="wifiTest"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.612"
         app:layout_constraintStart_toEndOf="@+id/imageButton12"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03"
         app:srcCompat="@drawable/wiii" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
