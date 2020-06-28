@@ -25,7 +25,6 @@ import java.util.List;
 
 public class WifiActivity extends AppCompatActivity {
     //Variables declaradas.
-    Button w_on, w_off;
     WifiManager wifiM;
     wifiReceiver wifiR;
     ListAdapter listAdapterWifi;
@@ -40,20 +39,18 @@ public class WifiActivity extends AppCompatActivity {
     }
     //Metodo que inicia las variables.
     public void initializeControls(){
-
-        w_on=(Button)findViewById(R.id.btn_turnon);
-        w_off=(Button)findViewById(R.id.btn_turnoff);
-
         wifiM=(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiList=(ListView)findViewById(R.id.list_view);
         wifiR = new wifiReceiver();
         registerReceiver(wifiR, new IntentFilter(wifiM.SCAN_RESULTS_AVAILABLE_ACTION));
+        this.mostradorRed();
+    }
 
-        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+    public void mostradorRed(){
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-        }else{
+        else
             scanWifiList();
-        }
     }
 
     private void scanWifiList() {
@@ -77,16 +74,19 @@ public class WifiActivity extends AppCompatActivity {
 
     //Metodo para encender el Wifi.
     public void onWifi(View view){
-
-        wifiM.setWifiEnabled(true);
-        Toast.makeText(this, "Wifi Habilitado", Toast.LENGTH_LONG).show();
+        if(wifiM.getWifiState()==wifiM.WIFI_STATE_DISABLED){
+            wifiM.setWifiEnabled(true);
+            Toast.makeText(this, "Wifi Habilitado", Toast.LENGTH_SHORT).show();
+            this.mostradorRed();
+        }/*else
+            this.mostradorRed();*/
     }
 
     //Metodo para apagar el Wifi.
     public void offWifi(View view){
 
         wifiM.setWifiEnabled(false);
-        Toast.makeText(this, "Wifi Deshabilitado", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Wifi Deshabilitado", Toast.LENGTH_SHORT).show();
     }
 
 }
