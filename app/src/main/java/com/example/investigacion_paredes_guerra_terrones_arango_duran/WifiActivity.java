@@ -43,7 +43,9 @@ public class WifiActivity extends AppCompatActivity {
         wifiList=(ListView)findViewById(R.id.list_view);
         wifiR = new wifiReceiver();
         registerReceiver(wifiR, new IntentFilter(wifiM.SCAN_RESULTS_AVAILABLE_ACTION));
-        this.mostradorRed();
+        if(wifiM.getWifiState()==wifiM.WIFI_STATE_ENABLED) {
+            this.mostradorRed();
+        }
     }
 
     public void mostradorRed(){
@@ -78,8 +80,7 @@ public class WifiActivity extends AppCompatActivity {
             wifiM.setWifiEnabled(true);
             Toast.makeText(this, "Wifi Habilitado", Toast.LENGTH_SHORT).show();
             this.mostradorRed();
-        }/*else
-            this.mostradorRed();*/
+        }
     }
 
     //Metodo para apagar el Wifi.
