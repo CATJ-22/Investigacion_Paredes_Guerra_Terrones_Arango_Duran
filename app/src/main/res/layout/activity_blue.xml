@@ -7,56 +7,92 @@
     tools:context=".BlueActivity">
 
 
-    <LinearLayout
-        android:layout_width="408dp"
-        android:layout_height="606dp"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="0dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/statusBluetoothTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
 
-        <Button
-            android:id="@+id/onBtn"
-            android:layout_width="98dp"
-            android:layout_height="47dp"
-            android:text="ON" />
+    <TextView
+        android:id="@+id/statusBluetoothTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BLUETOOTH" />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BLUETOOTH"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.077" />
 
-        <Button
-            android:id="@+id/offBtn"
-            android:layout_width="101dp"
-            android:layout_height="47dp"
-            android:text="OFF" />
+    <Button
+        android:id="@+id/offBtn"
+        android:layout_width="101dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:text="OFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toEndOf="@+id/onBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <Button
-            android:id="@+id/PairedBtn"
-            android:layout_width="102dp"
-            android:layout_height="62dp"
-            android:text="GET PAIRED DEVICES" />
+    <Button
+        android:id="@+id/onBtn"
+        android:layout_width="98dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginTop="16dp"
+        android:text="ON"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <TextView
-            android:id="@+id/pairedTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
+    <Button
+        android:id="@+id/btnBuscarDispositivos"
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:text="BUSCAR DISPOSITIVOS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pairedTv"
+        app:layout_constraintVertical_bias="0.142" />
 
-        <Button
-            android:id="@+id/btnBuscarDispositivos"
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
-            android:text="BUSCAR DISPOSITIVOS" />
+    <TextView
+        android:id="@+id/pairedTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/PairedBtn"
+        android:layout_width="102dp"
+        android:layout_height="62dp"
+        android:text="GET PAIRED DEVICES"
+        app:layout_constraintBottom_toTopOf="@+id/pairedTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
