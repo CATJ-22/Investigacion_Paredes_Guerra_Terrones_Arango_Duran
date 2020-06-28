@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.investigacion_paredes_guerra_terrones_arango_duran.Adapters.ListAdapterWifi;
@@ -24,7 +25,8 @@ import java.util.List;
 
 
 public class WifiActivity extends AppCompatActivity {
-    //Variables declaradas.
+    //Variables utilizadas.
+    TextView red_on;
     WifiManager wifiM;
     wifiReceiver wifiR;
     ListAdapter listAdapterWifi;
@@ -35,10 +37,12 @@ public class WifiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi);
+        //Llamada de los metodos.
         initializeControls();
     }
     //Metodo que inicia las variables.
     public void initializeControls(){
+        red_on=(TextView)findViewById(R.id.txt_redOn);
         wifiM=(WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiList=(ListView)findViewById(R.id.list_view);
         wifiR = new wifiReceiver();
@@ -47,7 +51,7 @@ public class WifiActivity extends AppCompatActivity {
             this.mostradorRed();
         }
     }
-
+    //Mostrar las redes disponibles.
     public void mostradorRed(){
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
@@ -55,17 +59,20 @@ public class WifiActivity extends AppCompatActivity {
             scanWifiList();
     }
 
+    //Metodo para escanear las redes cercanas.
     private void scanWifiList() {
         wifiM.startScan();
         wifi_List = wifiM.getScanResults();
         setAdapter();
     }
 
+    //Metodo para establecer el adaptador de la Listview.
     private void setAdapter() {
         listAdapterWifi = new ListAdapterWifi(getApplicationContext(), wifi_List);
         wifiList.setAdapter(listAdapterWifi);
     }
 
+    //Clase para recibir datos.
     class wifiReceiver extends BroadcastReceiver{
 
         @Override
@@ -78,16 +85,19 @@ public class WifiActivity extends AppCompatActivity {
     public void onWifi(View view){
         if(wifiM.getWifiState()==wifiM.WIFI_STATE_DISABLED){
             wifiM.setWifiEnabled(true);
+            red_on.setVisibility(view.VISIBLE);
+            wifiList.setVisibility(view.VISIBLE);
             Toast.makeText(this, "Wifi Habilitado", Toast.LENGTH_SHORT).show();
-            this.mostradorRed();
         }
+        this.mostradorRed();
     }
 
     //Metodo para apagar el Wifi.
     public void offWifi(View view){
-
         wifiM.setWifiEnabled(false);
         Toast.makeText(this, "Wifi Deshabilitado", Toast.LENGTH_SHORT).show();
+        red_on.setVisibility(view.INVISIBLE);
+        wifiList.setVisibility(view.INVISIBLE);
     }
 
 }
