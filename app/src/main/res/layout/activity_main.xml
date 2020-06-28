@@ -4,40 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/pincipal_background">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="#FFFFFFFF"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/utplogo"
-        tools:layout_editor_absoluteX="0dp" />
 
     <ImageButton
         android:id="@+id/imageButton12"
-        android:layout_width="82dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFFFF"
+        android:layout_width="80dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="24dp"
+        android:background="#00FFFFFF"
         android:onClick="blueTooth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blueblue_copia"/>
+        app:srcCompat="@drawable/blueblue_copia" />
 
     <ImageButton
         android:id="@+id/imageButton18"
         android:layout_width="129dp"
         android:layout_height="107dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFFFF"
+        android:layout_marginStart="104dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginTop="28dp"
+        android:background="#00FFFFFF"
         android:onClick="wifiTest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toEndOf="@+id/imageButton12"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/wiii" />

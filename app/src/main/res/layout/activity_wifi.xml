@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:gravity="top|center"
     android:orientation="vertical"
-    tools:context=".WifiActivity">
+    tools:context=".WifiActivity"
+    android:background="@drawable/wifi_background">
 
     <Button
         android:id="@+id/btn_turnon"
@@ -14,6 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:onClick="onWifi"
+        android:background="@drawable/buttons"
+        android:textColor="#FFFFFF"
         android:text="Turn On"
         android:textSize="20dp" />
 
@@ -23,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:onClick="offWifi"
+        android:background="@drawable/buttons"
+        android:textColor="#FFFFFF"
         android:text="Turn Off"
         android:textSize="20dp" />
 
@@ -31,13 +36,19 @@
         android:layout_height="wrap_content"
         android:text="Available Wifi Networks"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"/>
+    </ScrollView>
 
 </LinearLayout>
