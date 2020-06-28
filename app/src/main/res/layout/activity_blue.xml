@@ -7,10 +7,6 @@
     tools:context=".BlueActivity">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
 
     <TextView
         android:id="@+id/statusBluetoothTv"
@@ -94,5 +90,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
