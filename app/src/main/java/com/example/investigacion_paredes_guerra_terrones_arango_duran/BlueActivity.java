@@ -12,4 +12,5 @@ public class BlueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blue);
 
     }
+    //PRUEBA MERCH
 }
