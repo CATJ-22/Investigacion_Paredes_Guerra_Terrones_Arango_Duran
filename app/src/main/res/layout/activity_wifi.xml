@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="top|center"
     android:orientation="vertical"
     tools:context=".WifiActivity">
 
@@ -26,10 +26,18 @@
         android:text="Turn Off"
         android:textSize="20dp" />
 
-    <ListView
-        android:id="@+id/listview"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="20dp"
-        />
+        android:layout_height="wrap_content"
+        android:text="Available Wifi Networks"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"/>
+
 </LinearLayout>
