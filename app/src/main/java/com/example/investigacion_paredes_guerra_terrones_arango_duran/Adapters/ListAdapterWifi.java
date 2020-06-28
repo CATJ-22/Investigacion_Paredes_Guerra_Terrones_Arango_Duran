@@ -53,7 +53,9 @@ public class ListAdapterWifi extends BaseAdapter {
         else{
             holder = (Holder)view.getTag();
         }
-        return null;
+
+        holder.wDetails.setText(wifi_list.get(position).SSID);
+        return view;
     }
 
     class Holder{
