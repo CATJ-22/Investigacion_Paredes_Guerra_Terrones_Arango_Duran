@@ -8,9 +8,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +25,31 @@ public class BlueActivity extends AppCompatActivity {
 
     private static final int REQUEST_ENABLE_BT = 0;
     private static final int REQUEST_DISCOVER_BT = 1;
+    private static final String TAG = null;
+    public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
+    public DeviceAdapter mDevicesAdapter;
+    ListView lvNewDevices;
 
     TextView mPairedTV,estado;
     Button encendido,apagar,recibir;
     BluetoothAdapter bluetoothAdapter;
     Button btnBuscarDispositivo ;
+
+    //Broadcast Receivier para los dipsositovos que todavia no estan emparejados
+    private BroadcastReceiver Receiverdevices = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            Log.d(TAG, "onReceiver :ACTION FOUND");
+            if(action.equals(BluetoothDevice.ACTION_FOUND)){
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mBTDevices.add(device);
+                Log.d(TAG,"ONRECIEVE" + device.getName() + ": " + device.getAddress());
+                mDevicesAdapter = new DeviceAdapter(context, R.layout.activity_device_list_adapter,mBTDevices);
+                lvNewDevices.setAdapter(mDevicesAdapter);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +65,10 @@ public class BlueActivity extends AppCompatActivity {
         estado =findViewById(R.id.statusBluetoothTv);
         encendido =findViewById(R.id.onBtn);
         apagar =findViewById(R.id.offBtn);
+        //Para buscar nuevos dispositivos
+        lvNewDevices = findViewById(R.id.NewDevices);
+        mBTDevices = new ArrayList<>();
+        // Para emparejar nuevos dispositivos
         recibir =findViewById(R.id.PairedBtn);
         mPairedTV =findViewById(R.id.pairedTv);
         ArrayList<BluetoothDevice> arrayDevices;
@@ -116,6 +143,25 @@ public class BlueActivity extends AppCompatActivity {
         // Don't forget to unregister the ACTION_FOUND receiver.
         unregisterReceiver(receiver);
     }
+
+    //BUSCAR DISPOSITIVOS
+    public void BuscarDispositivos(View view) {
+    Log.d(TAG,"btnBuscarDispositivos: Looking for unpaired devices.");
+    if(bluetoothAdapter.isDiscovering()){
+        bluetoothAdapter.cancelDiscovery();
+        Log.d(TAG,"btnBuscarDispositivos: Canceling discovery");
+           //checkBTPermissions();
+        bluetoothAdapter.startDiscovery();
+        IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(Receiverdevices,discoverDevicesIntent);
+
+    }
+    }
+/*
+    private void checkBTPermissions(){
+        if(Build.VERSION)
+
+    }*/
 
     // PAIR DEVICES
 /*
