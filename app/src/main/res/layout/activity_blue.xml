@@ -91,19 +91,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <RelativeLayout
+
+    <ListView
+        android:id="@+id/NewDevices"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/NewDevices"
-            android:layout_width="362dp"
-            android:layout_height="179dp"
-            android:background="#FFFFFF" />
-    </RelativeLayout>
-
-
-
+        android:layout_height="@+id/btnBuscarDispositivos"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBuscarDispositivos" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
