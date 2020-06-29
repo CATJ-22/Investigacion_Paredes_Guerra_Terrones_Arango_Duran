@@ -8,52 +8,43 @@
     android:background="@drawable/bluetooth_background">
 
 
-
     <TextView
         android:id="@+id/statusBluetoothTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BLUETOOTH"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/offBtn"
         android:layout_width="101dp"
         android:layout_height="47dp"
-        android:layout_marginTop="16dp"
+        android:background="@drawable/buttons"
         android:text="OFF"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toEndOf="@+id/onBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104" />
 
     <Button
         android:id="@+id/onBtn"
         android:layout_width="98dp"
         android:layout_height="47dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="16dp"
+        android:background="@drawable/buttons"
         android:text="ON"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.236"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104" />
 
     <Button
         android:id="@+id/btnBuscarDispositivos"
@@ -61,6 +52,8 @@
         android:layout_height="wrap_content"
         android:text="BUSCAR DISPOSITIVOS"
         android:onClick="BuscarDispositivos"
+        android:background="@drawable/buttons"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -85,6 +78,8 @@
         android:layout_width="102dp"
         android:layout_height="62dp"
         android:text="GET PAIRED DEVICES"
+        android:background="@drawable/buttons"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/pairedTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -97,7 +92,7 @@
         android:id="@+id/NewDevices"
         android:layout_width="match_parent"
         android:layout_height="@+id/btnBuscarDispositivos"
-        android:background="#FFFFFF"
+        android:background="#79FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
