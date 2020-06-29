@@ -25,7 +25,7 @@ public class BlueActivity extends AppCompatActivity {
 
     private static final int REQUEST_ENABLE_BT = 0;
     private static final int REQUEST_DISCOVER_BT = 1;
-    private static final String TAG = null;
+    private static final String TAG = "BlueActivity";
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
     public DeviceAdapter mDevicesAdapter;
     ListView lvNewDevices;
