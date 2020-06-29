@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class BlueActivity extends AppCompatActivity {
+public class BlueActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final int REQUEST_ENABLE_BT = 0;
     private static final int REQUEST_DISCOVER_BT = 1;
@@ -37,31 +38,13 @@ public class BlueActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     Button btnBuscarDispositivo;
 
-    //Broadcast Receivier para los dipsositovos que todavia no estan emparejados
-    private BroadcastReceiver Receiverdevices = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            Log.d(TAG, "onReceiver :ACTION FOUND");
-            if (action.equals(BluetoothDevice.ACTION_FOUND)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                mBTDevices.add(device);
-                Log.d(TAG, "ONRECIEVE" + device.getName() + ": " + device.getAddress());
-                mDevicesAdapter = new DeviceAdapter(context, R.layout.activity_device_list_adapter, mBTDevices);
-                lvNewDevices.setAdapter(mDevicesAdapter);
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blue);
 
-        // Register for broadcasts when a device is discovered.
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(receiver, filter);
-
+        //VARIABLES
         btnBuscarDispositivo = (Button) findViewById(R.id.btnBuscarDispositivos);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         estado = findViewById(R.id.statusBluetoothTv);
@@ -74,6 +57,17 @@ public class BlueActivity extends AppCompatActivity {
         recibir = findViewById(R.id.PairedBtn);
         mPairedTV = findViewById(R.id.pairedTv);
         ArrayList<BluetoothDevice> arrayDevices;
+
+        // Register for broadcasts when a device is discovered.
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiver, filter);
+
+        // //Broadcasts when bond state changes (ie:pairing)
+        IntentFilter filterbond = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        registerReceiver(receiver1, filterbond);
+        lvNewDevices.setOnItemClickListener(BlueActivity.this);
+
+
         encendido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,11 +134,30 @@ public class BlueActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Don't forget to unregister the ACTION_FOUND receiver.
         unregisterReceiver(receiver);
+        unregisterReceiver(Receiverdevices);
+        unregisterReceiver(receiver1);
     }
 
-    //BUSCAR DISPOSITIVOS
+// BUSCAR DISPOSITIVOS
+
+    //Broadcast Receivier para los dipsositovos que todavia no estan emparejados
+    private BroadcastReceiver Receiverdevices = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            Log.d(TAG, "onReceiver :ACTION FOUND");
+            if (action.equals(BluetoothDevice.ACTION_FOUND)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mBTDevices.add(device);
+                Log.d(TAG, "ONRECIEVE" + device.getName() + ": " + device.getAddress());
+                mDevicesAdapter = new DeviceAdapter(context, R.layout.activity_device_list_adapter, mBTDevices);
+                lvNewDevices.setAdapter(mDevicesAdapter);
+            }
+        }
+    };
+
+    //BOTON DE BUSCAR DISPOSITIVOS
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void BuscarDispositivos(View view) {
         Log.d(TAG, "btnBuscarDispositivos: Looking for unpaired devices.");
@@ -164,6 +177,7 @@ public class BlueActivity extends AppCompatActivity {
         }
     }
 
+    //PERMISO PARA PODER QUE SE MUESTRE LOS DISPOSITIVOS EN EL LIST VIEW
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void checkBTPermissions() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
@@ -176,22 +190,49 @@ public class BlueActivity extends AppCompatActivity {
             Log.d(TAG, "checkBTPermissions: o need to check permissions. SDK version < LOLLIPOP.");
         }
     }
-}
 
 
-
-    // PAIR DEVICES
-/*
-    private final BroadcastReceiver bReceiver2= new BroadcastReceiver() {
+    // EMPAREJAR DISPOSITIVOS
+    private BroadcastReceiver receiver1 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //Cada vez que se descubra un nuevo dispositivo Bluethooth, s
-             final String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            final String action = intent.getAction();
+            if(action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)){
+                BluetoothDevice mDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-
+                //case1: bonded already
+                if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED){
+                    Log.d(TAG, "BroadcastReceiver: BOND_BONDED.");
+                }
+                //case2: creating a bone
+                if (mDevice.getBondState() == BluetoothDevice.BOND_BONDING) {
+                    Log.d(TAG, "BroadcastReceiver: BOND_BONDING.");
+                }
+                //case3: breaking a bond
+                if (mDevice.getBondState() == BluetoothDevice.BOND_NONE) {
+                    Log.d(TAG, "BroadcastReceiver: BOND_NONE.");
+                }
             }
         }
     };
-*/
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // CANCEL DISCOVERY
+        bluetoothAdapter.cancelDiscovery();
+
+        Log.d(TAG, "onItemClick: You Clicked on a device.");
+        String deviceName = mBTDevices.get(position).getName();
+        String deviceAddress = mBTDevices.get(position).getAddress();
+
+        Log.d(TAG, "onItemClick: deviceName = " + deviceName);
+        Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
+
+        //CREATE THE BOND
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2){
+            Log.d(TAG, "Trying to pair with " + deviceName);
+            mBTDevices.get(position).createBond();
+        }
+
+    }
+}
